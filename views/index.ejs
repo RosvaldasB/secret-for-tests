@@ -1,0 +1,143 @@
+<%- include("partials/header.ejs") %>
+
+<main>
+    
+    <% if (locals.info) { %>
+    <div class="container" id="main-frame">    
+        <div class="weather-report-div">
+            <div class="info-header">
+                <h1> <%= info.name %>, <%= info.sys.country %> </h1>
+            </div>
+
+            <div class="seperator"></div>
+
+            <div class="info-body">
+                <div class="main-info">
+                    <div class="weather-condition">
+                        <img src="https://openweathermap.org/img/wn/<%= info.weather[0].icon %>@2x.png" alt=<%= info.weather[0].description %>>
+                        <p> <%= info.weather[0].description %> <% if(info.clouds.all != 0) {%>
+                            <span>(<%= info.clouds.all %><%= unit.percent %>)</span>
+                        <% } %> </p>
+                    </div>
+                    <div class="wind">
+                        <p><img style="width: 12px; transform: rotate( <%= info.wind.deg%>deg )" src="https://www.svgrepo.com/show/52695/down-arrow.svg" alt="wind direction arrow">   <%= currentWindDirection%></p>
+                        <p class="wind-speed"><%= info.wind.speed %><%= unit.windSpeed%></p>
+                    </div>
+                </div>
+
+                <div class="sunrise-sunset">
+                    <div class="sunrise">
+                        <p class="sunTime"><%= currentSunrise %></p>
+                        <p class="dayTime">Sunrise</p>
+                    </div>
+                    <div class="sunset">
+                        <p class="sunTime"><%= currentSunset %></p>
+                        <p class="dayTime">Sunset</p>
+                    </div>
+                </div>
+                
+
+                <div class="base-info">
+                    <div class="temp">
+                        <p class="data-number"><%= info.main.temp%><%= unit.temp%></p>
+                        <p class="title">Temperature</p>
+                    </div>
+                    <div class="humidity">
+                        <p class="data-number"><%= info.main.humidity %><%= unit.percent %></p>
+                        <p class="title">Humidity</p>
+                    </div>
+                    <div class="rain">
+                        <% if (info.rain) { %>
+                            <p class="data-number"><%=info.rain['1h']%><%= unit.precipitation %></p>
+                            <p class="title">Rain precipitation</p>
+                        <% } else { %>
+                            <p class="data-number-none">No rain in the past hour.</p>
+                            <p class="title">Rain precipitation</p>
+                        <% } %>
+                    </div>
+                    <div class="snow">
+                        <% if (info.snow) { %>
+                            <p class="data-number"><%=info.snow['1h'] %><%= unit.precipitation %></p>
+                            <p class="title">Snow precipitation</p>
+                        <% } else { %>
+                            <p class="data-number-none">No snow in the past hour.</p>
+                            <p class="title">Snow precipitation</p>
+                        <% } %>  
+                    </div>
+                </div>
+                <div class="air-quality">
+                    <p class="quality-value"><%= airQuality %></p>
+                    <p class="title">Air Quality</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="seperator"></div>
+
+        <div class="future-forecast-container">
+            <% forecast.forEach((timeStamp, index) => { %>
+                <div class="hour-forecast-container">
+                    <p><%= forecast[index].time %></p>
+                    <img src="https://openweathermap.org/img/wn/<%= forecast[index].conditionImg %>@2x.png" alt=<%= forecast[index].condition %>>
+                    <p><%= forecast[index].condition %></p>
+                    <p><%= forecast[index].temp %><%= unit.temp %></p>
+                    <p><%= forecast[index].cloudiness %><%= unit.percent %></p>
+                    <p><%= forecast[index].windSpeed %><%= unit.windSpeed %></p>
+                    <p><img style="width: 12px;transform: rotate( <%= forecast[index].windDirectionArrow%>deg )" src="https://www.svgrepo.com/show/52695/down-arrow.svg" alt="wind direction arrow">   <%= forecast[index].windDirection %></p>
+                    <% if(!forecast[index].rain){ %>
+                        <p>No rain.</p>
+                    <% } else { %>
+                        <p><%= forecast[index].rain['3h'] %><%= unit.precipitation %></p>
+                    <% } %>
+                    <% if(!forecast[index].snow){ %>
+                        <p>No snow.</p>
+                    <% } else { %>
+                        <p><%= forecast[index].snow['3h'] %><%= unit.precipitation %></p>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
+
+    </div>        
+    <% } else { %>
+    
+    <div class="introduction">
+        <div class="main-introduction-div">
+            <h1>Welcome to Weather Buddy!</h1>
+            <p>Enter your location and get your weather forecast currently and the nest 24 hours!</p>
+        </div>
+        <div class="quick-load">
+            <h2>Or use these <img src="https://www.svgrepo.com/show/491565/arrow-turn-right-down.svg" alt="down-arrow" class="down-direction-arrow"></h2>
+            <form action="/weather-report" method="post" class="quick-load-form">
+                <input type="submit" name="city" value="London">
+                <input type="submit" name="city" value="Berlin">
+                <input type="submit" name="city" value="Moscow">
+                <input type="submit" name="city" value="Warsaw">
+                <input type="submit" name="city" value="Vilnius">
+                <input type="submit" name="city" value="Vienna">
+                <input type="submit" name="city" value="Ankara">
+                <input type="submit" name="city" value="Beijing">
+                <input type="submit" name="city" value="Washington">
+                <input type="submit" name="city" value="Paris">
+                <input type="submit" name="city" value="Rome">
+                <input type="submit" name="city" value="Madrid">
+                <input type="submit" name="city" value="Riga">
+                <input type="submit" name="city" value="Tallinn">
+                <input type="submit" name="city" value="Stockholm">
+                <input type="submit" name="city" value="Helsinki">
+                <input type="submit" name="city" value="Copenhagen">
+                <input type="submit" name="city" value="Bucharest">
+                <input type="submit" name="city" value="Minsk">
+                <input type="submit" name="city" value="Kyiv">
+                <input type="submit" name="city" value="Tokyo">
+                <input type="submit" name="city" value="Cairo">
+                <input type="submit" name="city" value="Abu Dhabi">
+                <input type="submit" name="city" value="Ontario">
+            </form>
+        </div>
+    </div>
+    <% } %>
+    
+</main>
+
+<%- include("partials/footer.ejs") %>
