@@ -15,7 +15,8 @@ Technologies used:
 
 1. Clone
 2. Npm install (contains dotenv, which safekeeps my api keys needed for the project).
-3. If you use nodemon, then "nodemon index.js" and in the browser localhost:3000. Else "node index.js" and localhost:3000.
+3. This is Secret Test to showcase my project to other, also contains api keys to see and evaluate my projects functionality.
+4. If you use nodemon, then "nodemon index.js" and in the browser localhost:3000. Else "node index.js" and localhost:3000.
 
 <h3>Finally</h3>
 
